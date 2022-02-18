@@ -5,7 +5,12 @@
       "noImplicitAny": true,
       "removeComments": true,
       "preserveConstEnums": true,
-      "target": "ES5",
+      "target": "es2019",
+      "lib": [
+        "ES2019",
+        "DOM",
+        "DOM.Iterable",
+      ],
       "sourceMap": true,
       "jsx": "react",
       "allowJs": true,

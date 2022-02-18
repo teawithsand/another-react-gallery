@@ -1,0 +1,321 @@
+$antg: (
+    "background-color": rgb(0, 0, 0),
+    "color": rgb(255, 255, 255),
+) !default;
+
+$antg-controls: (
+    "background-color": rgb(0, 0, 0),
+    "hover-background-color": rgba(255, 255, 255, 0.2),
+    "opacity": 0.1,
+    "hover-opacity": 1,
+    "font-size": 50px,
+    "z-index": 10,
+    "width": 20%,
+    "transition-opacity-duration": 0.5s,
+    "transition-background-color-duration": 0.5s,
+) !default;
+
+$antg-bottom-bar: (
+    "border-color": rgb(255, 255, 255),
+    "border-width": 1px,
+    "border-radius": 10px,
+    "active-border-width": 3px,
+    "active-border-color": rgb(255, 255, 255),
+    "hover-border-color": rgb(255, 255, 255),
+    "hover-border-width": 1px,
+    "transition-border-width-duration": 0s,
+) !default;
+
+$antg-bottom-bar-image-border-color: rgb(255, 255, 255) !default;
+$antg-bottom-bar-image-border-width: 1px;
+$antg-bottom-bar-image-border-radius: 10px;
+
+$antg-bottom-bar-image-active-border-color: rgb(255, 255, 255) !default;
+$antg-bottom-bar-image-active-border-width: 1;
+
+$top-bar-height: calc(50px);
+$bottom-bar-height: calc(max(#{$top-bar-height} * 1.5, min(10vh, 15%)));
+
+$middle-bar-height: calc(100% - #{$bottom-bar-height} - #{$top-bar-height});
+
+$top-bar-height-full: calc(50px);
+$middle-bar-height-full: calc(100% - #{$top-bar-height-full});
+$bottom-bar-height-full: 0px;
+
+@keyframes antg-gallery__animation-fade-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes antg-gallery__animation-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@mixin antg-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    grid-row-start: 1;
+    grid-column-start: 1;
+
+    height: 100%;
+
+    z-index: map-get($antg-controls, "z-index");
+    font-size: map-get($antg-controls, "font-size");
+
+    width: map-get($antg-controls, "width");
+    opacity: map-get($antg-controls, "opacity");
+
+    // animation-name: antg-gallery__control-animation;
+    // animation-duration: map-get($antg-controls, "animation-duration");
+    transition: opacity map-get($antg-controls, "transition-opacity-duration"),
+        background-color map-get($antg-controls, "transition-background-color-duration");
+
+    &:hover {
+        background-color: map-get($antg-controls, "hover-background-color");
+        opacity: map-get($antg-controls, "hover-opacity");
+
+        // transition: opactity 1s;
+
+        // animation-name: antg-gallery__control-animation--hover;
+        // animation-duration: map-get($antg-controls, "animation-duration");
+    }
+
+    &__center-hack {
+        margin-bottom: auto;
+        margin-top: auto;
+    }
+}
+
+.antg-gallery {
+    $this: &;
+
+    // Use this to prevent showing scrollbars when in fullscreen, since
+    // then we display covering box with is 100vh and 100vw, so we do not really want to scroll then.
+    // even though website underneath may be scrollable.
+    &-body-hack {
+        overflow-y: hidden !important;
+        overflow-x: hidden !important;
+    }
+
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    max-height: 100%;
+
+    border-radius: 2px;
+
+    background-color: map-get($antg, "background-color");
+    color: map-get($antg, "color");
+
+    &__fade--outro {
+        animation: antg-gallery__animation-fade-out 0.5s linear;
+        opacity: 0;
+    }
+
+    &__fade--intro {
+        animation: antg-gallery__animation-fade-in 0.5s linear;
+        opacity: 1;
+    }
+
+    &__clickable-hack {
+        cursor: pointer;
+    }
+
+    &--fullscreen {
+        height: 100vh !important;
+        width: 100vw !important;
+    }
+
+    &__top-bar {
+        display: flex;
+        flex-direction: row;
+        height: $top-bar-height;
+        justify-content: center;
+
+        font-size: calc($top-bar-height - 10px - 10px);
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        * {
+            align-self: center;
+            flex-grow: 1;
+            flex-shrink: 1;
+            width: 100%;
+        }
+
+        text-align: center;
+        :first-child {
+            text-align: left;
+        }
+        :last-child {
+            text-align: right;
+        }
+    }
+
+    &__toggle_full_icon {
+        user-select: none;
+    }
+
+    &__title {
+    }
+
+    &__image_no {
+        user-select: none;
+    }
+
+    &__middle-bar {
+        height: $middle-bar-height;
+        width: 100%;
+
+        display: grid;
+
+        user-select: none;
+
+        // simpler than animation and should do just as well
+        transition: height 1s;
+
+        &--full-view {
+            height: $middle-bar-height-full;
+        }
+    }
+
+    &__control-left {
+        @include antg-control();
+
+        margin-right: auto;
+    }
+
+    &__control-right {
+        @include antg-control();
+
+        margin-left: auto;
+    }
+
+    &__central-item {
+        display: block;
+
+        height: 100%;
+        max-width: 100%;
+
+        box-sizing: border-box;
+        object-fit: contain;
+
+        grid-row-start: 1;
+        grid-column-start: 1;
+
+        margin-bottom: auto;
+        margin-top: auto;
+        margin-left: auto;
+        margin-right: auto;
+
+        padding-bottom: auto;
+        padding-top: auto;
+        padding-left: auto;
+        padding-right: auto;
+    }
+
+    &__bottom-bar {
+        display: flex;
+        align-items: center;
+
+        margin-top: auto;
+        height: $bottom-bar-height;
+
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        user-select: none;
+        z-index: 1000;
+
+        padding-top: 5px;
+        padding-bottom: 5px;
+
+        // simpler than animation and should do just as well
+        transition: height 1s, padding-top 1s, padding-bottom 1s;
+
+        // TODO(teawithsand): move scrollbar size/color to variables, so they can be externally configured
+        // Works on FF
+        scrollbar-color: white black;
+
+        // Works on webkit
+        &::-webkit-scrollbar {
+            height: 6px;
+            background: rgba(0, 0, 0, 0);
+            color: white;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: white;
+            border-radius: 10px;
+        }
+
+        :first-child {
+            margin-left: auto;
+        }
+        :last-child {
+            margin-right: auto;
+        }
+
+
+
+        &--full-view {
+            height: $bottom-bar-height-full;
+            padding-top: 0px;
+            padding-bottom: 0px;
+
+            #{$this}__bottom-image {
+                &--active {
+                    border-width: 0px;
+                }
+                border-width: 0px;
+            }
+        }       
+    }
+
+    &__bottom-image {
+        height: 100%;
+        // for ultrawide pictures, prevent them from being really wide
+        max-width: 150%;
+
+        // for ultrashort images, prevent them from being border-only wide
+        min-width: 20px;
+
+        margin-left: 10px;
+        margin-right: 10px;
+
+        box-sizing: content-box;
+
+        border-radius: map-get($antg-bottom-bar, "border-radius");
+        border-color: map-get($antg-bottom-bar, "border-color");
+        border-width: map-get($antg-bottom-bar, "border-width");
+        border-style: solid;
+
+        transition: border-width 0.2s;
+
+        &--active {
+            border-color: map-get($antg-bottom-bar, "active-border-color");
+            border-width: map-get($antg-bottom-bar, "active-border-width");
+        }
+
+        /*
+        &:hover {
+            border-color: map-get($antg-bottom-bar, "hover-border-color");
+            border-width: map-get($antg-bottom-bar, "hover-border-width");
+        }
+        */
+    }
+}

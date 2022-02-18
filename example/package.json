@@ -19,12 +19,13 @@
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
     "html-webpack-plugin": "^5.5.0",
+    "sass-loader": "^12.6.0",
     "ts-loader": "^9.2.6"
   },
   "dependencies": {
+    "another-react-gallery": "file:../dist",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "another-react-gallery": "file:../dist"
+    "react-dom": "^17.0.2"
   },
   "browserslist": [
     "> 0.5%",
