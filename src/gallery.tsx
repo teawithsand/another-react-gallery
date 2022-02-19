@@ -112,7 +112,6 @@ export function Gallery(props: GalleryProps) {
                         const dx = sx - x
                         const dy = sy - y
 
-                        console.log("scrolling", { dx, dy })
                         div.scroll({
                             left: mx + dx,
                             top: my + dy,
