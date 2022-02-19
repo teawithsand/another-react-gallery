@@ -6,5 +6,5 @@ body {
 }
 
 .const-height {
-    height: 700px;
+    height: calc(min(700px, 100vh));
 }

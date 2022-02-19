@@ -1,6 +1,6 @@
 export type ItemSource = string | {
     type: "srcset",
-    srcset: string,
+    srcSet: string,
 } | {
     type: "src",
     src: string,
@@ -11,8 +11,12 @@ export type ItemSource = string | {
  */
 export type Item = {
     type: "image",
+
+    key: string,
     source: ItemSource,
     thumbnailSource?: ItemSource,
+
+    className?: string,
     
     title?: string,
     alt?: string,

@@ -40,7 +40,7 @@ $middle-bar-height: calc(100% - #{$bottom-bar-height} - #{$top-bar-height});
 
 $top-bar-height-full: calc(50px);
 $middle-bar-height-full: calc(100% - #{$top-bar-height-full});
-$bottom-bar-height-full: 0px;
+$bottom-bar-height-full: 0px; // note: it must stay zero; otherwise fix padding as well
 
 @keyframes antg-gallery__animation-fade-out {
     from {
@@ -97,8 +97,15 @@ $bottom-bar-height-full: 0px;
     }
 }
 
+body {
+    overflow-y: hidden !important;
+    overflow-x: hidden !important;
+}
+
 .antg-gallery {
     $this: &;
+
+    box-sizing: border-box;
 
     // Use this to prevent showing scrollbars when in fullscreen, since
     // then we display covering box with is 100vh and 100vw, so we do not really want to scroll then.
@@ -108,8 +115,10 @@ $bottom-bar-height-full: 0px;
         overflow-x: hidden !important;
     }
 
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: $top-bar-height $middle-bar-height $bottom-bar-height;
+    transition: grid-template-rows 1s;
+
     max-width: 100%;
     max-height: 100%;
 
@@ -117,6 +126,32 @@ $bottom-bar-height-full: 0px;
 
     background-color: map-get($antg, "background-color");
     color: map-get($antg, "color");
+
+    &__internal-bar {
+        box-sizing: border-box;
+        height: 100%;
+        width: 100%;
+    }
+
+    &__internal-scrollbar {
+        // TODO(teawithsand): move scrollbar size/color to variables, so they can be externally configured
+
+        // Works on FF
+        scrollbar-color: white black;
+
+        // Works on Chrome
+        &::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+            background: rgba(0, 0, 0, 0);
+            color: white;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: white;
+            border-radius: 10px;
+        }
+    }
 
     &__fade--outro {
         animation: antg-gallery__animation-fade-out 0.5s linear;
@@ -132,22 +167,91 @@ $bottom-bar-height-full: 0px;
         cursor: pointer;
     }
 
+    &__gesture {
+        touch-action: none;
+
+        & * {
+            touch-action: none;
+        }
+    }
+
     &--fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
         height: 100vh !important;
         width: 100vw !important;
     }
 
+    &--full-view {
+        grid-template-rows: $top-bar-height-full $middle-bar-height-full $bottom-bar-height-full;
+
+        #{$this}__bottom-bar--full-view {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    }
+
+    &--zoom-view {
+        grid-template-rows: 0 100% 0;
+
+        #{$this}__middle-bar {
+            @extend #{$this}__internal-scrollbar;
+            overflow: hidden;
+            // scroll-behavior: smooth;
+
+            grid-row-start: 2;
+            grid-column-start: 1;
+
+            width: auto;
+            height: auto;
+            max-width: none;
+            max-height: none;
+        }
+
+        #{$this}__central-item {
+            width: auto;
+            height: auto;
+            max-width: none;
+            max-height: none;
+
+            margin-top: auto;
+            margin-bottom: auto;
+
+            &--inactive {
+                display: none;
+            }
+        }
+
+        #{$this}__control-left {
+            display: none;
+        }
+        #{$this}__control-right {
+            display: none;
+        }
+        #{$this}__top-bar {
+            display: none;
+        }
+        #{$this}__bottom-bar {
+            display: none;
+        }
+    }
+
     &__top-bar {
+        @extend #{$this}__internal-bar;
+        grid-row-start: 1;
+        grid-column-start: 1;
+
         display: flex;
         flex-direction: row;
-        height: $top-bar-height;
+
         justify-content: center;
 
-        font-size: calc($top-bar-height - 10px - 10px);
+        // font-size: calc(100% - 10px - 10px);
         padding-left: 10px;
         padding-right: 10px;
-        padding-top: 10px;
-        padding-bottom: 10px;
+        // padding-top: 10px;
+        // padding-bottom: 10px;
 
         * {
             align-self: center;
@@ -177,19 +281,14 @@ $bottom-bar-height-full: 0px;
     }
 
     &__middle-bar {
-        height: $middle-bar-height;
-        width: 100%;
+        @extend #{$this}__internal-bar;
+        grid-row-start: 2;
+        grid-column-start: 1;
 
         display: grid;
+        grid-template-rows: 100%;
 
         user-select: none;
-
-        // simpler than animation and should do just as well
-        transition: height 1s;
-
-        &--full-view {
-            height: $middle-bar-height-full;
-        }
     }
 
     &__control-left {
@@ -216,86 +315,48 @@ $bottom-bar-height-full: 0px;
         grid-row-start: 1;
         grid-column-start: 1;
 
-        margin-bottom: auto;
-        margin-top: auto;
+        // margin-bottom: auto;
+        // margin-top: auto;
         margin-left: auto;
         margin-right: auto;
-
-        padding-bottom: auto;
-        padding-top: auto;
-        padding-left: auto;
-        padding-right: auto;
     }
 
     &__bottom-bar {
-        display: flex;
-        align-items: center;
+        @extend #{$this}__internal-bar;
+        @extend #{$this}__internal-scrollbar;
+        grid-row-start: 3;
+        grid-column-start: 1;
 
-        margin-top: auto;
-        height: $bottom-bar-height;
-
+        padding-top: 10px;
+        padding-bottom: 10px;
         width: 100%;
+
+        // display: flex;
+        display: block;
+        white-space: nowrap;
+
+        text-align: center;
+
         overflow-x: auto;
         overflow-y: hidden;
 
         user-select: none;
-        z-index: 1000;
-
-        padding-top: 5px;
-        padding-bottom: 5px;
-
-        // simpler than animation and should do just as well
-        transition: height 1s, padding-top 1s, padding-bottom 1s;
-
-        // TODO(teawithsand): move scrollbar size/color to variables, so they can be externally configured
-        // Works on FF
-        scrollbar-color: white black;
-
-        // Works on webkit
-        &::-webkit-scrollbar {
-            height: 6px;
-            background: rgba(0, 0, 0, 0);
-            color: white;
-        }
-
-        &::-webkit-scrollbar-thumb {
-            background: white;
-            border-radius: 10px;
-        }
-
-        :first-child {
-            margin-left: auto;
-        }
-        :last-child {
-            margin-right: auto;
-        }
-
-
-
-        &--full-view {
-            height: $bottom-bar-height-full;
-            padding-top: 0px;
-            padding-bottom: 0px;
-
-            #{$this}__bottom-image {
-                &--active {
-                    border-width: 0px;
-                }
-                border-width: 0px;
-            }
-        }       
     }
 
     &__bottom-image {
-        height: 100%;
-        // for ultrawide pictures, prevent them from being really wide
-        max-width: 150%;
+        display: inline;
 
-        // for ultrashort images, prevent them from being border-only wide
-        min-width: 20px;
+        object-fit: contain;
 
-        margin-left: 10px;
-        margin-right: 10px;
+        height: auto;
+        max-height: 100%;
+
+        // min-width: 5vw;
+        max-width: 200vw;
+
+        margin-left: 5px - map-get($antg-bottom-bar, "border-width");
+        margin-right: 5px - map-get($antg-bottom-bar, "border-width");
+        object-fit: contain;
 
         box-sizing: content-box;
 
@@ -305,10 +366,15 @@ $bottom-bar-height-full: 0px;
         border-style: solid;
 
         transition: border-width 0.2s;
+        transition: margin-left 0.2s;
+        transition: margin-right 0.2s;
 
         &--active {
             border-color: map-get($antg-bottom-bar, "active-border-color");
             border-width: map-get($antg-bottom-bar, "active-border-width");
+
+            margin-left: 5px - map-get($antg-bottom-bar, "active-border-width");
+            margin-right: 5px - map-get($antg-bottom-bar, "active-border-width");
         }
 
         /*

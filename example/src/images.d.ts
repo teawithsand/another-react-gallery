@@ -1,22 +1,72 @@
-declare module '*.jpg' {
-    const fooUrl: string
-    namespace fooUrl { }
-    export = fooUrl
-}
-
-declare module '*.jpeg' {
-    const fooUrl: string
-    namespace fooUrl { }
-    export = fooUrl
-}
+// PNG support
 declare module '*.png' {
-    const fooUrl: string
-    namespace fooUrl { }
-    export = fooUrl
+    interface ResponsiveImageEntry {
+        src: string,
+        width: number,
+        height: number,
+    }
+
+    interface ResponsiveImage {
+        src: string,
+        srcSet: string,
+        images: ResponsiveImageEntry[],
+    }    
+    const fooImage: ResponsiveImage
+    namespace fooImage { }
+    export = fooImage
 }
 
-declare module '*.gif' {
-    const fooUrl: string
-    namespace fooUrl { }
-    export = fooUrl
+// JPG support
+declare module '*.jpg' {
+    interface ResponsiveImageEntry {
+        src: string,
+        width: number,
+        height: number,
+    }
+
+    interface ResponsiveImage {
+        src: string,
+        srcSet: string,
+        images: ResponsiveImageEntry[],
+    }    
+    const fooImage: ResponsiveImage
+    namespace fooImage { }
+    export = fooImage
 }
+
+// JPEG support
+declare module '*.jpeg' {
+    interface ResponsiveImageEntry {
+        src: string,
+        width: number,
+        height: number,
+    }
+
+    interface ResponsiveImage {
+        src: string,
+        srcSet: string,
+        images: ResponsiveImageEntry[],
+    }    
+    const fooImage: ResponsiveImage
+    namespace fooImage { }
+    export = fooImage
+}
+
+// WEBP support
+declare module '*.webp' {
+    interface ResponsiveImageEntry {
+        src: string,
+        width: number,
+        height: number,
+    }
+
+    interface ResponsiveImage {
+        src: string,
+        srcSet: string,
+        images: ResponsiveImageEntry[],
+    }    
+    const fooImage: ResponsiveImage
+    namespace fooImage { }
+    export = fooImage
+}
+

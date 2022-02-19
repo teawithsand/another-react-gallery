@@ -41,7 +41,22 @@ Encore
     .enableIntegrityHashes(Encore.isProduction())
     .enableSassLoader()
     .addPlugin(new HtmlWebpackPlugin)
-;
+
+    .configureImageRule({ enabled: false })
+    .addRule({
+        // TODO(teawithsand): set format to webp, 
+        test: /\.(jpe?g|png|webp)$/i,
+        use: {
+            // https://github.com/dazuaz/responsive-loader
+            loader: 'responsive-loader',
+            options: {
+                esModule: true,
+                sizes: [60, 480, 960, 1920, 1920000],
+                adapter: require('responsive-loader/sharp'),
+            }
+        }
+    })
+    ;
 
 const config = Encore.getWebpackConfig();
 config.resolve.alias.react = path.resolve('node_modules/react');

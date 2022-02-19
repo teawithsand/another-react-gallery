@@ -1,7 +1,7 @@
 import { Item } from ".";
 import { RenderedItem } from "./item";
-import React, { useRef } from "react"
-import { prefixClasses } from "./utils";
+import React, { useEffect, useRef } from "react"
+import { concatClasses, prefixClasses } from "./utils";
 
 export type GalleryDisplay = (
     props: {
@@ -35,6 +35,7 @@ export const DisolveGalleryDisplay = (
     const firstItemStyles = prefixClasses(
         stylePrefix,
         "antg-gallery__central-item",
+        "antg-gallery__central-item--active",
         onClick ? "antg-gallery__clickable-hack" : null,
     )
 
@@ -42,6 +43,7 @@ export const DisolveGalleryDisplay = (
         stylePrefix,
         "antg-gallery__central-item",
         "antg-gallery__fade--intro",
+        "antg-gallery__central-item--active",
         onClick ? "antg-gallery__clickable-hack" : null,
     )
 
@@ -49,6 +51,7 @@ export const DisolveGalleryDisplay = (
         stylePrefix,
         "antg-gallery__central-item",
         "antg-gallery__fade--outro",
+        "antg-gallery__central-item--inactive",
         onClick ? "antg-gallery__clickable-hack" : null,
     )
 
@@ -67,33 +70,26 @@ export const DisolveGalleryDisplay = (
     ]
 
     const lastItem = useRef(null)
-    if (prevItem === null || lastItem.current === item) {
+
+    if (prevItem === null || lastItem.current?.key == item.key) {
         const e = elements[currentElementIndexRef.current]
         e.item = item
-        e.className = firstItemStyles
+        e.className = concatClasses(firstItemStyles, item.className)
     } else {
-        lastItem.current = item
-
         const oldElement = elements[currentElementIndexRef.current]
         const newElementIndex = (currentElementIndexRef.current + 1) % elements.length
         const newElement = elements[newElementIndex]
 
         oldElement.item = prevItem
-        oldElement.className = oldItemStyles
+        oldElement.className = concatClasses(oldItemStyles, prevItem.className)
 
         newElement.item = item
-        newElement.className = newItemStyles
+        newElement.className = concatClasses(newItemStyles, item.className)
 
         currentElementIndexRef.current = newElementIndex
     }
-
-    /*
-    useEffect(() => {
-        return () => {
-        }
-    }, [newRef, oldRef, newItem, oldItem])
-    */
-
+    lastItem.current = item
+    
     return <>
         {elements.map((e, i) => {
             if (!e.item)

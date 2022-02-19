@@ -1,2 +1,2 @@
-export { Item, ItemSource as ImageSource } from "./image"
-export { Gallery, GalleryProps } from "./gallery"
+export { Item, ItemSource } from "./image"
+export { Gallery, GalleryProps, GalleryMode, GalleryConfig, GalleryCallbacks, GalleryState } from "./gallery"

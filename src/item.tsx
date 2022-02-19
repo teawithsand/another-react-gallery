@@ -40,7 +40,7 @@ export const RenderedItem = (props: {
             } else if (typeof thumbnailSource === "object" && thumbnailSource.type === "srcset") {
                 props = {
                     ...initProps,
-                    srcSet: thumbnailSource.srcset,
+                    srcSet: thumbnailSource.srcSet,
                 }
             } else {
                 sourceSet = false
@@ -63,7 +63,7 @@ export const RenderedItem = (props: {
             } else if (typeof source === "object" && source.type === "srcset") {
                 props = {
                     ...initProps,
-                    srcSet: source.srcset,
+                    srcSet: source.srcSet,
                 }
             }
         }

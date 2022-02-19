@@ -4,7 +4,7 @@
   "description": "Yet another react gallery implementation",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -r dist && tsc && node-sass src/scss --recursive --source-map true --source-map-contents sass -o dist/css && cp -r src/scss dist/scss"
+    "build": "rm -r dist; tsc && node-sass src/scss --recursive --source-map true --source-map-contents sass -o dist/css && cp -r src/scss dist/scss"
   },
   "author": "teawithsand",
   "license": "MIT",
@@ -31,5 +31,8 @@
   "types": "dist/index.d.ts",
   "files": [
     "/dist"
-  ]
+  ],
+  "dependencies": {
+    "@use-gesture/react": "^10.2.6"
+  }
 }

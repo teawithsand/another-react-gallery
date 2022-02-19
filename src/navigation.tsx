@@ -38,6 +38,9 @@ export const useGalleryNavigation = (items: Item[]) => {
                 idx += items.length
     
             goToIndex(idx)
-        }    
+        },
+        clearPrev: () => {
+            setPrevItemIndex(null)
+        }
     }
 }
