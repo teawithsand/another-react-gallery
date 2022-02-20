@@ -10,6 +10,7 @@ export type ItemSource = string | {
     src: string,
 }
 
+
 /**
  * Type of images handled by this gallery.
  */
@@ -27,3 +28,6 @@ export type Item = {
     width?: number,
     height?: number,
 }
+
+
+// TODO(teawithsand): implement <picture> tag support in these sources
