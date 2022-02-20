@@ -1,6 +1,10 @@
+/**
+ * Defines where from item should be loaded.
+ */
 export type ItemSource = string | {
     type: "srcset",
     srcSet: string,
+    sizes?: string,
 } | {
     type: "src",
     src: string,

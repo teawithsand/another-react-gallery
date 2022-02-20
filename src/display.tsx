@@ -15,28 +15,22 @@ type Element = {
     item: Item | null,
 }
 
-export interface GalleryDisplayProps {
-    prevItem: Item | null,
-    item: Item,
-    stylePrefix?: string,
-    onClick?: () => void,
-}
-
 export const DisolveGalleryDisplay = (
     props: {
         prevItem: Item | null,
         item: Item,
         stylePrefix?: string,
+        isClickable?: boolean,
         onClick?: () => void,
     }
 ) => {
-    const { prevItem, item, stylePrefix, onClick, } = props
+    const { prevItem, item, stylePrefix, onClick, isClickable } = props
 
     const firstItemStyles = prefixClasses(
         stylePrefix,
         "antg-gallery__central-item",
         "antg-gallery__central-item--active",
-        onClick ? "antg-gallery__clickable-hack" : null,
+        isClickable ? "antg-gallery__clickable-hack" : null,
     )
 
     const newItemStyles = prefixClasses(
@@ -44,7 +38,7 @@ export const DisolveGalleryDisplay = (
         "antg-gallery__central-item",
         "antg-gallery__fade--intro",
         "antg-gallery__central-item--active",
-        onClick ? "antg-gallery__clickable-hack" : null,
+        isClickable ? "antg-gallery__clickable-hack" : null,
     )
 
     const oldItemStyles = prefixClasses(
@@ -52,7 +46,7 @@ export const DisolveGalleryDisplay = (
         "antg-gallery__central-item",
         "antg-gallery__fade--outro",
         "antg-gallery__central-item--inactive",
-        onClick ? "antg-gallery__clickable-hack" : null,
+        isClickable ? "antg-gallery__clickable-hack" : null,
     )
 
 

@@ -18,7 +18,7 @@ import "./style.scss"
 const App = () => {
     const [state, setState] = useState<GalleryState>({})
 
-    const items: Item[] = [
+    const baseItems: Item[] = [
         starryNight,
         battleOfGrunwald,
         girlReadingALetterAtAnOpenWindow,
@@ -35,7 +35,19 @@ const App = () => {
             srcSet: raw.srcSet,
         },
         alt: "Alt text for image",
+        title: `Image #${i+1}`
     }))
+
+    const items: Item[] = [
+        ...baseItems,
+        {
+            type: "image",
+            key: "err-1",
+            source: "/notfound/image",
+            alt: "Error text here",
+            title: "Error image title",
+        }
+    ]
 
     return <div>
         <Gallery

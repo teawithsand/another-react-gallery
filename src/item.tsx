@@ -41,6 +41,7 @@ export const RenderedItem = (props: {
                 props = {
                     ...initProps,
                     srcSet: thumbnailSource.srcSet,
+                    sizes: thumbnailSource.sizes,
                 }
             } else {
                 sourceSet = false
@@ -64,6 +65,7 @@ export const RenderedItem = (props: {
                 props = {
                     ...initProps,
                     srcSet: source.srcSet,
+                    sizes: source.sizes,
                 }
             }
         }

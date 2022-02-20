@@ -253,31 +253,43 @@ body {
         // padding-top: 10px;
         // padding-bottom: 10px;
 
+        text-align: center;
+
         * {
             align-self: center;
             flex-grow: 1;
             flex-shrink: 1;
             width: 100%;
         }
+    }
 
-        text-align: center;
-        :first-child {
-            text-align: left;
-        }
-        :last-child {
-            text-align: right;
+    &__top-internal {
+        user-select: none;
+        * {
+            display: inline;
         }
     }
 
-    &__toggle_full_icon {
-        user-select: none;
+    &__top-left {
+        @extend #{$this}__top-internal;
+        text-align: left;
+        
+    }
+
+    &__top-center {
+        @extend #{$this}__top-internal;
+
+        text-align: center;
+    }
+
+    &__top-right {
+        @extend #{$this}__top-internal;
+
+        text-align: right;
     }
 
     &__title {
-    }
-
-    &__image_no {
-        user-select: none;
+        user-select: auto;
     }
 
     &__middle-bar {
@@ -306,7 +318,7 @@ body {
     &__central-item {
         display: block;
 
-        height: 100%;
+        max-height: 100%;
         max-width: 100%;
 
         box-sizing: border-box;
@@ -315,8 +327,8 @@ body {
         grid-row-start: 1;
         grid-column-start: 1;
 
-        // margin-bottom: auto;
-        // margin-top: auto;
+        margin-bottom: auto;
+        margin-top: auto;
         margin-left: auto;
         margin-right: auto;
     }
@@ -346,19 +358,21 @@ body {
     &__bottom-image {
         display: inline;
 
-        object-fit: contain;
+        object-fit: cover;
 
-        height: auto;
+        height: calc(100% - map-get($antg-bottom-bar, "active-border-width") * 2);
         max-height: 100%;
 
-        // min-width: 5vw;
+        min-width: calc(max(3vw, 20px));
         max-width: 200vw;
+
+        line-height: 100%;
+        vertical-align: middle;
 
         margin-left: 5px - map-get($antg-bottom-bar, "border-width");
         margin-right: 5px - map-get($antg-bottom-bar, "border-width");
-        object-fit: contain;
 
-        box-sizing: content-box;
+        box-sizing: border-box;
 
         border-radius: map-get($antg-bottom-bar, "border-radius");
         border-color: map-get($antg-bottom-bar, "border-color");

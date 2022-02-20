@@ -211,30 +211,39 @@ export function Gallery(props: GalleryProps) {
         )
     }>
         <div className={prefixClasses(stylePrefix, "antg-gallery__top-bar")}>
-            <div className="antg-gallery__image_no">
-                {nav.itemIndex + 1}/{items.length}
+            <div className="antg-gallery__top-left">
+                <div className="antg-gallery__image-no">
+                    {nav.itemIndex + 1}/{items.length}
+                </div>
             </div>
-            <div className="antg-gallery__title">
-                {nav.item.title ?? ""}
+
+            <div className="antg-gallery__top-center">
+                <div className="antg-gallery__title">
+                    {nav.item.title ?? ""}
+                </div>
             </div>
-            <div className="antg-gallery__toggle_zoom_icon"
-                onClick={onModeToggle ? () => {
-                    if (mode === "zoom-view") {
-                        onModeToggle("normal")
-                    } else {
-                        onModeToggle("zoom-view")
-                    }
-                } : null}
-            >
-                ZOOM
+
+            <div className="antg-gallery__top-right">
+                <div className="antg-gallery__toggle-zoom-icon"
+                    onClick={onModeToggle ? () => {
+                        if (mode === "zoom-view") {
+                            onModeToggle("normal")
+                        } else {
+                            onModeToggle("zoom-view")
+                        }
+                    } : null}
+                >
+                    ZOOM
+                </div>
+                <div className="antg-gallery__toggle-full-icon"
+                    onClick={onFullscreenToggle ? () => {
+                        onFullscreenToggle(!fullscreenDisplay)
+                    } : null}
+                >
+                    FSC
+                </div>
             </div>
-            <div className="antg-gallery__toggle_full_icon"
-                onClick={onFullscreenToggle ? () => {
-                    onFullscreenToggle(!fullscreenDisplay)
-                } : null}
-            >
-                FSC
-            </div>
+            
         </div>
         <div
             ref={zoomScrollDivRef}
@@ -258,8 +267,9 @@ export function Gallery(props: GalleryProps) {
                 item={nav.item}
                 prevItem={nav.prevItem}
 
-                // Toggling fullscreen on click breaks UI, so it's disabled.
+                // Toggling fullscreen on click breaks UX, so it's disabled.
                 // It may be enabled in future version.
+                isClickable={mode === "zoom-view"}
                 onClick={() => {
                     if (mode === "zoom-view") {
                         onModeToggle("normal")
