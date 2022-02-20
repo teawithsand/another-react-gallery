@@ -281,9 +281,9 @@ export function Gallery(props: GalleryProps) {
 
                 // Toggling fullscreen on click breaks UX, so it's disabled.
                 // It may be enabled in future version.
-                isClickable={mode === "zoom-view"}
+                isClickable={mode === "zoom-view" || mode === "full-view"}
                 onClick={() => {
-                    if (mode === "zoom-view") {
+                    if (mode === "zoom-view" || mode === "full-view") {
                         onModeToggle("normal")
                     }
                 }}
