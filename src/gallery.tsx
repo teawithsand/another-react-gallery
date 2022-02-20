@@ -211,20 +211,27 @@ export function Gallery(props: GalleryProps) {
         )
     }>
         <div className={prefixClasses(stylePrefix, "antg-gallery__top-bar")}>
-            <div className="antg-gallery__top-left">
-                <div className="antg-gallery__image-no">
+            <div className={prefixClasses(stylePrefix, "antg-gallery__top-left")}>
+                <div className={prefixClasses(stylePrefix, "antg-gallery__image-no")}>
                     {nav.itemIndex + 1}/{items.length}
                 </div>
             </div>
 
-            <div className="antg-gallery__top-center">
-                <div className="antg-gallery__title">
+            <div className={prefixClasses(stylePrefix, "antg-gallery__top-center")}>
+                <div className={prefixClasses(stylePrefix, "antg-gallery__title")}>
                     {nav.item.title ?? ""}
                 </div>
             </div>
 
-            <div className="antg-gallery__top-right">
-                <div className="antg-gallery__toggle-zoom-icon"
+            <div className={prefixClasses(
+                stylePrefix,
+                "antg-gallery__top-right"
+            )}>
+                <div className={prefixClasses(
+                    stylePrefix,
+                    "antg-gallery__toggle-zoom-icon",
+                    clickableClassName,
+                )}
                     onClick={onModeToggle ? () => {
                         if (mode === "zoom-view") {
                             onModeToggle("normal")
@@ -233,17 +240,22 @@ export function Gallery(props: GalleryProps) {
                         }
                     } : null}
                 >
-                    ZOOM
+                    {/* TODO(teawithsand): prettier solution */}
+                    ZOOM{" |"}
                 </div>
-                <div className="antg-gallery__toggle-full-icon"
+                <div className={prefixClasses(
+                    stylePrefix,
+                    "antg-gallery__toggle-full-icon",
+                    clickableClassName,
+                )}
                     onClick={onFullscreenToggle ? () => {
                         onFullscreenToggle(!fullscreenDisplay)
                     } : null}
                 >
-                    FSC
+                    {" "}FULLSCREEN
                 </div>
             </div>
-            
+
         </div>
         <div
             ref={zoomScrollDivRef}

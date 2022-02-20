@@ -4,7 +4,7 @@ I shall also refactor code, so it's NIY for now.
 
 # Usage
 1. `npm install --save another-react-gallery`
-2. Prepare CSS styles, which set height attribute for gallery.
+2. Prepare CSS styles, which set height attribute for gallery element. Otherwise arbitrarily-sized image may break UX.
 2. Import it and use it.
 
 # another-react-gallery 
