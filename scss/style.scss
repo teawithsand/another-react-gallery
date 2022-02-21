@@ -176,6 +176,7 @@ $bottom-bar-height-full: 0px; // note: it must stay zero; otherwise fix padding 
         left: 0;
         height: 100vh !important;
         width: 100vw !important;
+        z-index: 1000000; // useful, when there is something else in the page
     }
 
     &--full-view {
