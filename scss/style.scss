@@ -97,11 +97,6 @@ $bottom-bar-height-full: 0px; // note: it must stay zero; otherwise fix padding 
     }
 }
 
-body {
-    overflow-y: hidden !important;
-    overflow-x: hidden !important;
-}
-
 .antg-gallery {
     $this: &;
 
