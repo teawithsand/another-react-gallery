@@ -26,7 +26,7 @@ export interface GalleryCallbacks {
 }
 
 export interface GalleryConfig {
-    allowZoom?: boolean,
+    showZoomToggle?: boolean,
     showFullscreen?: boolean,
 }
 
@@ -43,7 +43,7 @@ const clickableClassName = "antg-gallery__clickable-hack"
 
 export function Gallery(props: GalleryProps) {
     const { items, stylePrefix, className, onFullscreenToggle, onModeToggle, mode: innerMode } = props
-    const { fullscreenDisplay } = props
+    const { fullscreenDisplay, showZoomToggle, showFullscreen } = props
 
     const isBottomBarVisibleOnScreenRef = useRef(false)
 
@@ -146,7 +146,7 @@ export function Gallery(props: GalleryProps) {
             }
         },
 
-        // TODO(teawithsand): entering zoom mode on pinch
+        // TODO(teawithsand): entering zoom/full mode on pinch
         onPinch: () => {
             return;
         }
@@ -227,7 +227,7 @@ export function Gallery(props: GalleryProps) {
                 stylePrefix,
                 "antg-gallery__top-right"
             )}>
-                <div className={prefixClasses(
+                {showZoomToggle ? <div className={prefixClasses(
                     stylePrefix,
                     "antg-gallery__toggle-zoom-icon",
                     clickableClassName,
@@ -241,9 +241,9 @@ export function Gallery(props: GalleryProps) {
                     } : null}
                 >
                     {/* TODO(teawithsand): prettier solution */}
-                    ZOOM{" |"}
-                </div>
-                <div className={prefixClasses(
+                    ZOOM{showFullscreen ? " |" : ""}
+                </div> : null}
+                {showFullscreen ? <div className={prefixClasses(
                     stylePrefix,
                     "antg-gallery__toggle-full-icon",
                     clickableClassName,
@@ -253,7 +253,7 @@ export function Gallery(props: GalleryProps) {
                     } : null}
                 >
                     {" "}FULLSCREEN
-                </div>
+                </div> : null}
             </div>
 
         </div>
