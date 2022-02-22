@@ -1,4 +1,4 @@
-import { Gallery, GalleryState, Item } from 'another-react-gallery'
+import { AutonomusGallery, Gallery, GalleryState, Item } from 'another-react-gallery'
 import React, { useState } from 'react'
 import { render } from 'react-dom'
 
@@ -16,8 +16,6 @@ import wandererAboveTheSeaOfFog from "./images/wandererAboveTheSeaOfFog.jpg"
 import "./style.scss"
 
 const App = () => {
-    const [state, setState] = useState<GalleryState>({})
-
     const baseItems: Item[] = [
         starryNight,
         battleOfGrunwald,
@@ -50,22 +48,11 @@ const App = () => {
     ]
 
     return <div>
-        <Gallery
+        <AutonomusGallery
             className="const-height"
             items={items}
-            {...state}
-            onModeToggle={(mode) => {
-                setState({
-                    ...state,
-                    mode
-                })
-            }}
-            onFullscreenToggle={(fullscreenDisplay) => {
-                setState({
-                    ...state,
-                    fullscreenDisplay
-                })
-            }}
+            showFullscreen={true}
+            showZoomToggle={true}
         />
     </div>
 }
