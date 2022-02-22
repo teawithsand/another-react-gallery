@@ -252,7 +252,7 @@ export function Gallery(props: GalleryProps) {
                         onFullscreenToggle(!fullscreenDisplay)
                     } : null}
                 >
-                    {" "}FULLSCREEN
+                    {" "}{fullscreenDisplay ? "EXIT FULLSCREEN" : "FULLSCREEN"}
                 </div> : null}
             </div>
 
