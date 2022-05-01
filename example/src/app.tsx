@@ -52,7 +52,7 @@ const App = () => {
             className="const-height"
             items={items}
             showFullscreen={true}
-            showZoomToggle={true}
+            showZoomToggle={false}
         />
     </div>
 }
