@@ -1,7 +1,7 @@
 # NOT MAINTAINED ANYMORE
 This project has been incorporated into [teawithsand-com-v3](https://github.com/teawithsand/teawithsand-com-v3) project codebase.
 
-You can find improved demo of this gallery at [https://teawithsand.com/tool/gallery]
+You can find demo of this gallery at [https://teawithsand.com/tool/gallery]
 
 In case you like it and/or you would like to use it in your project, open an issue and/or email me, and I'll move code from there to separate lib.
 
